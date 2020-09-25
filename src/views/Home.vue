@@ -14,6 +14,7 @@
         <p>unref: {{ uref }}</p>
         <p>markRaw : {{ markRawState.count }}</p>
         <p>toRawState : {{ toRawState.count }}</p>
+        <p v-my-directive:myDirective="222">directive</p>
     </div>
 </div>
 </template>
@@ -25,6 +26,13 @@ import * as _vuex from "vuex";
 import * as app from "../main";
 export default {
     name: "Home",
+    directives: {
+        myDirective: {
+            mounted(el, bind, vnode) {
+                log(el, bind, vnode, "directives");
+            },
+        },
+    },
     setup(props, ctx) {
         const state = _vue.reactive({
             count: 1,
@@ -72,8 +80,9 @@ export default {
             log(_router.useLink(props), "useLink");
             log(_router.RouterLink, "RouterLink");
             log(_router, "_router");
-            log(app.$proto.$red, "$red");
-            log(app.$proto.$route);
+            // log(app.$proto.$red, "$red");
+            log(app, "app:root:2.0");
+            log(_vue, "_vue:root:3.0");
             // console.log("this is onMounted");
         });
         _vue.onBeforeUpdate(() => {
