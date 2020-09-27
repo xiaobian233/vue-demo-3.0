@@ -4,13 +4,15 @@ import router from "./router";
 import store from "./store";
 import demo from "./tools/demo.ts";
 
-
-(function(window) {
+(function (window) {
   function log(...str) {
     console.log(...str);
   }
   window.log = log;
 })(window);
+
+
+log(process.env.VUE_APP_URL, "VUE_APP_URL=beta")
 
 const app = Vue.createApp(App)
   .use(store)

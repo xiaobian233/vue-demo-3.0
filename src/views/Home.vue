@@ -15,6 +15,7 @@
         <p>markRaw : {{ markRawState.count }}</p>
         <p>toRawState : {{ toRawState.count }}</p>
         <p v-my-directive:myDirective="222">directive</p>
+        <component :is="abt"></component>
     </div>
 </div>
 </template>
@@ -28,12 +29,16 @@ export default {
     name: "Home",
     directives: {
         myDirective: {
-            mounted(el, bind, vnode) {
+            mounted(el, bind, vnode, oldnoded) {
                 log(el, bind, vnode, "directives");
             },
         },
     },
+    components: {
+        about: _vue.defineAsyncComponent(() => import("@/views/About")),
+    },
     setup(props, ctx) {
+        let abt = "about";
         const state = _vue.reactive({
             count: 1,
         });
@@ -83,6 +88,18 @@ export default {
             // log(app.$proto.$red, "$red");
             log(app, "app:root:2.0");
             log(_vue, "_vue:root:3.0");
+            log(
+                _vue.resolveComponent("about"),
+                "resolveComponent"
+            );
+            log(
+                _vue.resolveDynamicComponent("about"),
+                "resolveDynamicComponent"
+            );
+            log(
+                _vue.resolveDirective("myDirective"),
+                "resolveDirective"
+            );
             // console.log("this is onMounted");
         });
         _vue.onBeforeUpdate(() => {
@@ -107,6 +124,7 @@ export default {
             uref,
             markRawState,
             toRawState,
+            abt,
         };
     },
 };
