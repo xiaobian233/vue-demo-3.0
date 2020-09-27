@@ -10,17 +10,16 @@
             <p>shallowRefState.value : {{ shallowRefState }}</p>
             <p>triggerRefState.value : {{ triggerRefState.text }}</p>
         </div>
-        <midde>
 
+        <!-- <midde>
             <template v-slot:slot="{names}" style="display: block;">
                 <h2>this is midden slov---------------{{names}}</h2>
             </template>
-
             <template v-slot:header style="display: block;">
                 <h1>Here might be a page title</h1>
             </template>
+        </midde> -->
 
-        </midde>
     </div>
 </template>
 
@@ -46,17 +45,21 @@
                 foo.count++
                 data.count++
                 count.value++
-                shallowRefState.value++
+                state.is = !state.is
+                shallowRefState.value.gets++
                 log(_vue.toRaw(data), _vue.toRaw(foo), count.value);
             }
             const shallowRefState = _vue.shallowRef({})
-            shallowRefState.value = 0
+            shallowRefState.value = {}
+            shallowRefState.value.gets = 0
 
             const triggerRefState = _vue.shallowRef({ text: "hello Vue" })
-            _vue.watchEffect(() => { log(triggerRefState.value.text, "watchEffect triggerRefState") })
+            // _vue.watchEffect(() => { log(triggerRefState.value.text, "watchEffect triggerRefState") })
             triggerRefState.value.text = "hello world!"
-            _vue.triggerRef(triggerRefState, "triggerRefState")
+            // _vue.triggerRef(triggerRefState, "triggerRefState")
 
+            // _vue.watchEffect((onIncallback) => { log(data.count, "data-------------", state.count, "state") })
+            // _vue.watch([() => data.count, () => state.count], (newArr, oldArr) => { log(newArr, "newArr", "---------", oldArr, "oldArr") })
 
             return { data, foo, addClick, count, demoValue, shallowRefState, triggerRefState }
 
@@ -79,6 +82,7 @@
                     }
                 })
             }
+
         },
     };
 </script>
